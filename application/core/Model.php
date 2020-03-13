@@ -6,6 +6,15 @@ class Model{
 			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
 		   PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
 		];
-		return new \PDO($dsn, 'root', '', $options);
+		try {
+			return new \PDO($dsn, 'root', '', $options);
+		} catch (PDOException $e) {
+			die('Подключение не удалось: ' . $e->getMessage());
+		}
+	}
+	protected static function getArray($stmt){
+		$output = [];
+		foreach($stmt as $value) $output[] = $value;
+		return $output;
 	}
 }

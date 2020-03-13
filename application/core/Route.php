@@ -6,7 +6,6 @@ class Route
 		$action_name = 'index';
 		
 		$routes = explode('/', $_SERVER['REQUEST_URI']);
-
 		if (!empty($routes[1])) $controller_name = $routes[1];
 		
 		if (!empty($routes[2])) $action_name = $routes[2];
@@ -22,7 +21,7 @@ class Route
 		$action = $action_name;
 		
 		if(method_exists($controller, $action)) $controller->$action();
-		else Route::ErrorPage404();
+		// else Route::ErrorPage404();
 	}
 	
 	static function ErrorPage404(){

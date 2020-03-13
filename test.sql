@@ -2,10 +2,10 @@
 -- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Хост: 127.0.0.1:3306
--- Время создания: Фев 08 2020 г., 19:55
--- Версия сервера: 8.0.15
--- Версия PHP: 7.0.33
+-- Host: 127.0.0.1:3306
+-- Generation Time: Mar 13, 2020 at 10:45 PM
+-- Server version: 5.7.25
+-- PHP Version: 7.3.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,51 +19,114 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База данных: `test`
+-- Database: `test`
 --
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `pages`
+-- Table structure for table `contacts`
 --
 
-CREATE TABLE `pages` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `friendly` tinyint(1) NOT NULL DEFAULT '0',
-  `title` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `contacts` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Дамп данных таблицы `pages`
+-- Dumping data for table `contacts`
 --
 
-INSERT INTO `pages` (`id`, `friendly`, `title`, `description`) VALUES
-(1, 0, 'Title 1', 'Description 1'),
-(2, 0, 'Title 2', 'Description 2'),
-(3, 0, 'Title 3', 'Description 3'),
-(4, 0, 'Title 4', 'Description 4');
+INSERT INTO `contacts` (`id`, `name`) VALUES
+(9, 'Александр'),
+(2, 'Анжела'),
+(1, 'Антон'),
+(4, 'Вася'),
+(12, 'Виктория'),
+(8, 'Всеволод'),
+(10, 'Инна'),
+(5, 'Ира'),
+(6, 'Кира'),
+(7, 'Кирилл'),
+(14, 'Марина'),
+(11, 'Надежда'),
+(3, 'Петя'),
+(13, 'Юлия');
+
+-- --------------------------------------------------------
 
 --
--- Индексы сохранённых таблиц
+-- Table structure for table `favorite`
+--
+
+CREATE TABLE `favorite` (
+  `user_id` int(11) NOT NULL,
+  `contact_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Indexes for dumped tables
 --
 
 --
--- Индексы таблицы `pages`
+-- Indexes for table `contacts`
 --
-ALTER TABLE `pages`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `contacts`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
--- AUTO_INCREMENT для сохранённых таблиц
+-- Indexes for table `favorite`
+--
+ALTER TABLE `favorite`
+  ADD PRIMARY KEY (`user_id`,`contact_id`),
+  ADD KEY `contact_id` (`contact_id`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT для таблицы `pages`
+-- AUTO_INCREMENT for table `contacts`
 --
-ALTER TABLE `pages`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `contacts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `favorite`
+--
+ALTER TABLE `favorite`
+  ADD CONSTRAINT `favorite_ibfk_1` FOREIGN KEY (`contact_id`) REFERENCES `contacts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `favorite_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
