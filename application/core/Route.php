@@ -21,7 +21,7 @@ class Route
 		$action = $action_name;
 		
 		if(method_exists($controller, $action)) $controller->$action();
-		// else Route::ErrorPage404();
+		else Route::ErrorPage404();
 	}
 	
 	static function ErrorPage404(){
