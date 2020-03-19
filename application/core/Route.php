@@ -2,7 +2,7 @@
 class Route
 {
 	static function start(){
-		$controller_name = 'Main';
+		$controller_name = 'Page';
 		$action_name = 'index';
 		
 		$routes = explode('/', $_SERVER['REQUEST_URI']);

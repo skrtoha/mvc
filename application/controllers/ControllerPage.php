@@ -4,9 +4,8 @@ class ControllerPage extends Controller{
 		$this->view = new View();
 	}
 	public function actionIndex(){
-		return $this->view->generate('authorization.tpl', 'main.tpl', [
-			'pageTitle' => 'Авторизация пользователя'
-		]);
+		if (!$_SESSION['user_id']) return $this->redirect('/page/authorization');
+		else return $this->redirect('/page/contacts');
 	}
 	public function actionRegistration(){
 		if (!empty($_POST)){
